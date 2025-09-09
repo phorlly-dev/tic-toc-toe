@@ -1,0 +1,79 @@
+import gameEvents from "./events";
+import Helpers from "./helpers";
+import Objects from "./objects";
+
+const Handlers = {
+    handleWin(scene, winner) {
+        scene.gameOver = true;
+        if (winner === "O") scene.scores.player++;
+        if (winner === "X") scene.scores.bot++;
+
+        // Send updates to React
+        gameEvents.emit("score:update", scene.scores);
+        gameEvents.emit("game:over", { winner });
+
+        // Highlight winning line
+        Objects.animateWinningLine(scene);
+
+        // Particle explosion
+        const { width, height } = scene.scale;
+        scene.winParticles.setPosition(width / 2, height / 2);
+        scene.winParticles.start();
+
+        // Screen flash
+        const flash = scene.add.rectangle(
+            width / 2,
+            height / 2,
+            width,
+            height,
+            0xffffff,
+            0.3
+        );
+        scene.tweens.add({
+            targets: flash,
+            alpha: 0,
+            duration: 600,
+            onComplete: () => flash.destroy(),
+        });
+
+        // Shake effect on losing symbols
+        scene.cells.forEach((cell, i) => {
+            if (
+                scene.board[i] &&
+                !scene.winningLine.includes(i) &&
+                cell.symbol
+            ) {
+                scene.tweens.add({
+                    targets: cell.symbol,
+                    x: cell.symbol.x + Phaser.Math.Between(-5, 5),
+                    y: cell.symbol.y + Phaser.Math.Between(-5, 5),
+                    yoyo: true,
+                    repeat: 5,
+                    duration: 50,
+                });
+            }
+        });
+
+        // Auto reset after 3 seconds
+        scene.time.delayedCall(3000, () => Helpers.resetBoard(scene));
+    },
+    handleDraw(scene) {
+        scene.gameOver = true;
+        gameEvents.emit("game:over", { winner: "draw" });
+
+        // Pulse all cells for draw effect
+        scene.cells.forEach((cell) => {
+            scene.tweens.add({
+                targets: cell.background,
+                alpha: { from: 1, to: 0.3 },
+                duration: 200,
+                yoyo: true,
+                repeat: 3,
+            });
+        });
+
+        scene.time.delayedCall(2000, () => Helpers.resetBoard(scene));
+    },
+};
+
+export default Handlers;
