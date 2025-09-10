@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import * as React from "react";
 import PhaserGame from "../components/PhaserGame";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -6,10 +6,10 @@ import { EventBus } from "../hooks/events";
 import { useToast } from "../hooks/toast";
 
 const App = () => {
-    const phaserRef = useRef();
+    const phaserRef = React.useRef();
     const { showToast } = useToast();
 
-    useEffect(() => {
+    React.useEffect(() => {
         const handleGameOver = ({ winner }) => {
             if (winner === "draw") {
                 showToast("🤝 It's a draw!", "warning");

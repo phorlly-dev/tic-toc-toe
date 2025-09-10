@@ -1,11 +1,11 @@
-import { forwardRef, useLayoutEffect, useRef } from "react";
+import * as React from "react";
 import StartGame from "../game/init";
 import { EventBus } from "../hooks/events";
 
-const PhaserGame = forwardRef((_props, ref) => {
-    const game = useRef();
+const PhaserGame = React.forwardRef((_props, ref) => {
+    const game = React.useRef();
 
-    useLayoutEffect(() => {
+    React.useLayoutEffect(() => {
         if (!game.current) {
             game.current = StartGame("game-container");
 
@@ -24,7 +24,7 @@ const PhaserGame = forwardRef((_props, ref) => {
     }, [ref]);
 
     // Listen for scene ready
-    useLayoutEffect(() => {
+    React.useLayoutEffect(() => {
         const handleSceneReady = (scene) => {
             if (ref) {
                 ref.current.scene = scene;

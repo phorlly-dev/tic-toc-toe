@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import * as React from "react";
 import { ToastContext } from "../components/ToastProvider";
 
-export const useToast = () => useContext(ToastContext);
+export const useToast = () => React.useContext(ToastContext);

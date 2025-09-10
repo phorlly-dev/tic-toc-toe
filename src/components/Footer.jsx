@@ -1,3 +1,4 @@
+import * as React from "react";
 import { EventBus } from "../hooks/events";
 
 const Footer = () => {

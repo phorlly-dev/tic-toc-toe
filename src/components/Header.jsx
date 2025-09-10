@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { EventBus } from "../hooks/events";
 import { FaGamepad } from "react-icons/fa";
 
 const Header = () => {
-    const [muted, setMuted] = useState(false);
-    const [scores, setScores] = useState({ player: 0, bot: 0 });
-    const [difficulty, setDifficulty] = useState("easy");
+    const [muted, setMuted] = React.useState(false);
+    const [scores, setScores] = React.useState({ player: 0, bot: 0 });
+    const [difficulty, setDifficulty] = React.useState("easy");
 
-    useEffect(() => {
+    React.useEffect(() => {
         const update = (data) => setScores({ ...data });
         EventBus.on("score:update", update);
 
