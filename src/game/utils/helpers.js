@@ -2,7 +2,7 @@ import { EventBus } from "../../hooks/events";
 
 const Helpers = {
     checkWinner(scene) {
-        for (const [a, b, c] of this.winningPatterns()) {
+        for (const [a, b, c] of winningPatterns()) {
             if (
                 scene.board[a] &&
                 scene.board[a] === scene.board[b] &&
@@ -56,7 +56,7 @@ const Helpers = {
     },
     resetGame(scene) {
         scene.scores = { player: 0, bot: 0 };
-        this.resetBoard(scene);
+        resetBoard(scene);
         EventBus.emit("score:update", { ...scene.scores });
     },
     getEmptyCells(scene) {
@@ -77,7 +77,7 @@ const Helpers = {
         ];
     },
     minimax(scene, board, depth, isMaximizing) {
-        const winner = this.checkWinner(scene);
+        const winner = checkWinner(scene);
         if (winner === "X") return 10 - depth;
         if (winner === "O") return depth - 10;
         if (board.every((c) => c !== null)) return 0;
@@ -89,7 +89,7 @@ const Helpers = {
                     board[i] = "X";
                     best = Math.max(
                         best,
-                        this.minimax(scene, board, depth + 1, false)
+                        minimax(scene, board, depth + 1, false)
                     );
                     board[i] = null;
                 }
@@ -102,7 +102,7 @@ const Helpers = {
                     board[i] = "O";
                     best = Math.min(
                         best,
-                        this.minimax(scene, board, depth + 1, true)
+                        minimax(scene, board, depth + 1, true)
                     );
                     board[i] = null;
                 }
@@ -112,4 +112,12 @@ const Helpers = {
     },
 };
 
-export default Helpers;
+export const {
+    checkWinner,
+    resizeBoard,
+    resetBoard,
+    resetGame,
+    getEmptyCells,
+    winningPatterns,
+    minimax,
+} = Helpers;

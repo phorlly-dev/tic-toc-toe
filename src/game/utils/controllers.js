@@ -1,6 +1,6 @@
-import Actions from "./actions";
-import Handlers from "./handlers";
-import Helpers from "./helpers";
+import { botPerfect, botRandom, botWinOrBlock } from "./actions";
+import { handleDraw, handleWin } from "./handlers";
+import { checkWinner } from "./helpers";
 
 const Contrllers = {
     // --- PLAYER MOVE ---
@@ -8,11 +8,11 @@ const Contrllers = {
         if (scene.board[index] || scene.gameOver || scene.currentPlayer !== "O")
             return;
 
-        this.makeMove(scene, index, "O"); // place O
+        makeMove(scene, index, "O"); // place O
 
         if (!scene.gameOver) {
             // let bot move after short delay
-            scene.time.delayedCall(400, () => this.makeBotMove(scene));
+            scene.time.delayedCall(400, () => makeBotMove(scene));
         }
     },
     // --- BOT MOVE ---
@@ -21,13 +21,13 @@ const Contrllers = {
 
         switch (scene.difficulty) {
             case "easy":
-                Actions.botRandom(scene);
+                botRandom(scene);
                 break;
             case "medium":
-                Actions.botWinOrBlock(scene);
+                botWinOrBlock(scene);
                 break;
             case "hard":
-                Actions.botPerfect(scene);
+                botPerfect(scene);
                 break;
         }
     },
@@ -51,13 +51,13 @@ const Contrllers = {
             ease: "Back.easeOut",
         });
 
-        const winner = Helpers.checkWinner(scene);
+        const winner = checkWinner(scene);
         if (winner) {
-            Handlers.handleWin(scene, winner);
+            handleWin(scene, winner);
         } else if (scene.board.every((c) => c !== null)) {
-            Handlers.handleDraw(scene);
+            handleDraw(scene);
         }
     },
 };
 
-export default Contrllers;
+export const { makePlayerMove, makeBotMove, makeMove } = Contrllers;

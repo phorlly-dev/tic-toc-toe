@@ -1,4 +1,4 @@
-import Contrllers from "./controllers";
+import { makePlayerMove } from "./controllers";
 
 const Objects = {
     createBoard(scene) {
@@ -13,7 +13,7 @@ const Objects = {
                 .setOrigin(0, 0)
                 .setDisplaySize(scene.cellSize, scene.cellSize)
                 .setInteractive()
-                .on("pointerup", () => Contrllers.makePlayerMove(scene, i)) // ✅ only one definition
+                .on("pointerup", () => makePlayerMove(scene, i)) // ✅ only one definition
                 .on("pointerover", () => {
                     if (!scene.board[i] && !scene.gameOver) {
                         cell.setTint(0x6600cc);
@@ -61,4 +61,4 @@ const Objects = {
     },
 };
 
-export default Objects;
+export const { createBoard, createParticles, animateWinningLine } = Objects;

@@ -1,7 +1,7 @@
 import * as Phaser from "phaser";
-import Objects from "../utils/objects";
-import Helpers from "../utils/helpers";
 import { EventBus } from "../../hooks/events";
+import { resetGame, resizeBoard } from "../utils/helpers";
+import { createBoard, createParticles } from "../utils/objects";
 
 class GameEngine extends Phaser.Scene {
     constructor() {
@@ -26,20 +26,20 @@ class GameEngine extends Phaser.Scene {
         this.startX = (width - this.boardSize) / 2;
         this.startY = (height - this.boardSize) / 2;
 
-        Objects.createBoard(this);
-        Objects.createParticles(this);
+        createBoard(this);
+        createParticles(this);
 
         // 🔹 Listen for React → Game events
-        EventBus.on("game:reset", () => Helpers.resetGame(this), this);
+        EventBus.on("game:reset", () => resetGame(this), this);
         EventBus.on("sound:toggle", (mute) => (this.sound.mute = mute));
         EventBus.on("difficulty:change", (level) => (this.difficulty = level));
 
         // Example UI: scores start at 0
         EventBus.emit("score:update", { ...this.scores });
 
-        Helpers.resizeBoard(this, this.scale.width, this.scale.height);
+        resizeBoard(this, this.scale.width, this.scale.height);
         this.scale.on("resize", (gameSize) => {
-            Helpers.resizeBoard(this, gameSize.width, gameSize.height);
+            resizeBoard(this, gameSize.width, gameSize.height);
         });
     }
 }

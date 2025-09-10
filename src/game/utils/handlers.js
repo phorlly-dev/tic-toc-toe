@@ -1,6 +1,6 @@
 import { EventBus } from "../../hooks/events";
-import Helpers from "./helpers";
-import Objects from "./objects";
+import { resetBoard } from "./helpers";
+import { animateWinningLine } from "./objects";
 
 const Handlers = {
     handleWin(scene, winner) {
@@ -14,7 +14,7 @@ const Handlers = {
         EventBus.emit("score:update", { ...scene.scores });
 
         // Highlight winning line
-        Objects.animateWinningLine(scene);
+        animateWinningLine(scene);
 
         // Particle explosion
         const { width, height } = scene.scale;
@@ -56,7 +56,7 @@ const Handlers = {
         });
 
         // Auto reset after 3 seconds
-        scene.time.delayedCall(3000, () => Helpers.resetBoard(scene));
+        scene.time.delayedCall(3000, () => resetBoard(scene));
     },
     handleDraw(scene) {
         scene.gameOver = true;
@@ -80,8 +80,8 @@ const Handlers = {
             });
         });
 
-        scene.time.delayedCall(2000, () => Helpers.resetBoard(scene));
+        scene.time.delayedCall(2000, () => resetBoard(scene));
     },
 };
 
-export default Handlers;
+export const { handleWin, handleDraw } = Handlers;
