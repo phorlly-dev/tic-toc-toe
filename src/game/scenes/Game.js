@@ -1,7 +1,7 @@
 import * as Phaser from "phaser";
-import gameEvents from "../utils/events";
 import Objects from "../utils/objects";
 import Helpers from "../utils/helpers";
+import { EventBus } from "../../hooks/events";
 
 class GameEngine extends Phaser.Scene {
     constructor() {
@@ -12,9 +12,13 @@ class GameEngine extends Phaser.Scene {
         this.scores = { player: 0, bot: 0 };
         this.cells = [];
         this.winningLine = null;
+        this.difficulty = "easy"; // default
     }
 
     create() {
+        // 🔹 Emit lifecycle
+        EventBus.emit("current-scene-ready", this);
+
         // Responsive board
         const { width, height } = this.scale;
         this.boardSize = Math.min(width, height);
@@ -25,14 +29,13 @@ class GameEngine extends Phaser.Scene {
         Objects.createBoard(this);
         Objects.createParticles(this);
 
-        // React → Phaser listeners
-        gameEvents.on("game:reset", () => this.resetGame());
-        gameEvents.on("sound:toggle", (mute) => {
-            this.sound.mute = mute;
-        });
+        // 🔹 Listen for React → Game events
+        EventBus.on("game:reset", () => Helpers.resetGame(this), this);
+        EventBus.on("sound:toggle", (mute) => (this.sound.mute = mute));
+        EventBus.on("difficulty:change", (level) => (this.difficulty = level));
 
-        // Initial emit to React
-        gameEvents.emit("score:update", this.scores);
+        // Example UI: scores start at 0
+        EventBus.emit("score:update", { ...this.scores });
 
         Helpers.resizeBoard(this, this.scale.width, this.scale.height);
         this.scale.on("resize", (gameSize) => {

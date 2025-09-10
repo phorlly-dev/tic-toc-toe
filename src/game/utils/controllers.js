@@ -1,3 +1,4 @@
+import Actions from "./actions";
 import Handlers from "./handlers";
 import Helpers from "./helpers";
 
@@ -11,22 +12,24 @@ const Contrllers = {
 
         if (!scene.gameOver) {
             // let bot move after short delay
-            scene.time.delayedCall(500, () => this.makeBotMove(scene));
+            scene.time.delayedCall(400, () => this.makeBotMove(scene));
         }
     },
     // --- BOT MOVE ---
     makeBotMove(scene) {
         if (scene.gameOver) return;
 
-        const emptyCells = scene.board
-            .map((val, idx) => (val === null ? idx : null))
-            .filter((val) => val !== null);
-
-        if (emptyCells.length === 0) return;
-
-        const choice = Phaser.Utils.Array.GetRandom(emptyCells);
-
-        this.makeMove(scene, choice, "X"); // place X
+        switch (scene.difficulty) {
+            case "easy":
+                Actions.botRandom(scene);
+                break;
+            case "medium":
+                Actions.botWinOrBlock(scene);
+                break;
+            case "hard":
+                Actions.botPerfect(scene);
+                break;
+        }
     },
     // --- CORE MOVE LOGIC ---
     makeMove(scene, index, player) {

@@ -1,23 +1,29 @@
 import { useEffect, useState } from "react";
-import gameEvents from "../game/utils/events";
+import { EventBus } from "../hooks/events";
+import { FaGamepad } from "react-icons/fa";
 
 const Header = () => {
     const [muted, setMuted] = useState(false);
     const [scores, setScores] = useState({ player: 0, bot: 0 });
+    const [difficulty, setDifficulty] = useState("easy");
 
     useEffect(() => {
         const update = (data) => setScores({ ...data });
-        gameEvents.on("score:update", update);
+        EventBus.on("score:update", update);
 
-        return () => {
-            gameEvents.off("score:update", update);
-        };
+        return () => EventBus.off("score:update", update);
     }, []);
 
     const toggle = () => {
         const newMute = !muted;
         setMuted(newMute);
-        gameEvents.emit("sound:toggle", newMute);
+        EventBus.emit("sound:toggle", newMute);
+    };
+
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setDifficulty(value);
+        EventBus.emit("difficulty:change", value);
     };
 
     return (
@@ -25,7 +31,7 @@ const Header = () => {
             <div className="flex justify-center sm:justify-start gap-3 w-full sm:w-auto">
                 <div className="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-lg text-white font-semibold">
                     <i className="fa fa-user text-green-400"></i>
-                    Player:{" "}
+                    You:{" "}
                     <span id="player-score" className="text-cyan-400 text-lg">
                         {scores.player}
                     </span>
@@ -37,6 +43,20 @@ const Header = () => {
                         {scores.bot}
                     </span>
                 </div>
+            </div>
+
+            {/* Difficulty Selector */}
+            <div className="relative">
+                <FaGamepad className="absolute left-2 top-1/2 -translate-y-1/2 text-pink-300" />
+                <select
+                    value={difficulty}
+                    onChange={handleChange}
+                    className="pl-8 pr-6 py-2 rounded-lg bg-indigo-900 text-white shadow-md border border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-pink-500 cursor-pointer"
+                >
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
             </div>
 
             <div className="flex items-center gap-2 w-full sm:w-auto justify-center">

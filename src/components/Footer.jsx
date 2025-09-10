@@ -1,4 +1,4 @@
-import gameEvents from "../game/utils/events";
+import { EventBus } from "../hooks/events";
 
 const Footer = () => {
     return (
@@ -11,7 +11,7 @@ const Footer = () => {
 
             {/* Reset button */}
             <button
-                onClick={() => gameEvents.emit("game:reset")}
+                onClick={() => EventBus.emit("game:reset")}
                 className="w-12 h-12 flex items-center justify-center 
                    rounded-full 
                    bg-gradient-to-br from-red-500 to-red-700 

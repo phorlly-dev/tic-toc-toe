@@ -1,24 +1,15 @@
-import gameEvents from "./events";
+import { EventBus } from "../../hooks/events";
 
 const Helpers = {
     checkWinner(scene) {
-        const patterns = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8],
-            [0, 4, 8],
-            [2, 4, 6],
-        ];
-        for (const [a, b, c] of patterns) {
+        for (const [a, b, c] of this.winningPatterns()) {
             if (
                 scene.board[a] &&
                 scene.board[a] === scene.board[b] &&
                 scene.board[a] === scene.board[c]
             ) {
                 scene.winningLine = [a, b, c];
+
                 return scene.board[a];
             }
         }
@@ -66,7 +57,58 @@ const Helpers = {
     resetGame(scene) {
         scene.scores = { player: 0, bot: 0 };
         this.resetBoard(scene);
-        gameEvents.emit("score:update", scene.scores);
+        EventBus.emit("score:update", { ...scene.scores });
+    },
+    getEmptyCells(scene) {
+        return scene.board
+            .map((val, idx) => (val === null ? idx : null))
+            .filter((val) => val !== null);
+    },
+    winningPatterns() {
+        return [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+    },
+    minimax(scene, board, depth, isMaximizing) {
+        const winner = this.checkWinner(scene);
+        if (winner === "X") return 10 - depth;
+        if (winner === "O") return depth - 10;
+        if (board.every((c) => c !== null)) return 0;
+
+        if (isMaximizing) {
+            let best = -Infinity;
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === null) {
+                    board[i] = "X";
+                    best = Math.max(
+                        best,
+                        this.minimax(scene, board, depth + 1, false)
+                    );
+                    board[i] = null;
+                }
+            }
+            return best;
+        } else {
+            let best = Infinity;
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === null) {
+                    board[i] = "O";
+                    best = Math.min(
+                        best,
+                        this.minimax(scene, board, depth + 1, true)
+                    );
+                    board[i] = null;
+                }
+            }
+            return best;
+        }
     },
 };
 

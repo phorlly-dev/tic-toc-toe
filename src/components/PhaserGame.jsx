@@ -1,25 +1,38 @@
 import { forwardRef, useLayoutEffect, useRef } from "react";
 import StartGame from "../game/init";
+import { EventBus } from "../hooks/events";
 
-const PhaserGame = forwardRef((ref, _props) => {
+const PhaserGame = forwardRef((_props, ref) => {
     const game = useRef();
 
-    // Create the game inside a useLayoutEffect hook to avoid the game being created outside the DOM
     useLayoutEffect(() => {
-        if (game.current === undefined) {
+        if (!game.current) {
             game.current = StartGame("game-container");
 
-            if (ref !== null) {
+            if (ref) {
                 ref.current = { game: game.current, scene: null };
             }
         }
 
+        // Clean up Phaser when React unmounts
         return () => {
             if (game.current) {
                 game.current.destroy(true);
                 game.current = undefined;
             }
         };
+    }, [ref]);
+
+    // Listen for scene ready
+    useLayoutEffect(() => {
+        const handleSceneReady = (scene) => {
+            if (ref) {
+                ref.current.scene = scene;
+            }
+        };
+        EventBus.on("current-scene-ready", handleSceneReady);
+
+        return () => EventBus.off("current-scene-ready", handleSceneReady);
     }, [ref]);
 
     return <div id="game-container"></div>;

@@ -1,10 +1,29 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import PhaserGame from "../components/PhaserGame";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { EventBus } from "../hooks/events";
+import { useToast } from "../hooks/toast";
 
 const App = () => {
     const phaserRef = useRef();
+    const { showToast } = useToast();
+
+    useEffect(() => {
+        const handleGameOver = ({ winner }) => {
+            if (winner === "draw") {
+                showToast("🤝 It's a draw!", "warning");
+            } else if (winner === "O") {
+                showToast("🎉 You Wins!", "success");
+            } else if (winner === "X") {
+                showToast("🤖 Bot Wins!", "error");
+            }
+        };
+
+        EventBus.on("game:over", handleGameOver);
+
+        return () => EventBus.off("game:over", handleGameOver);
+    }, [showToast]);
 
     return (
         <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-800 to-indigo-900 p-2">

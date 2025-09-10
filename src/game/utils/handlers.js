@@ -1,16 +1,17 @@
-import gameEvents from "./events";
+import { EventBus } from "../../hooks/events";
 import Helpers from "./helpers";
 import Objects from "./objects";
 
 const Handlers = {
     handleWin(scene, winner) {
         scene.gameOver = true;
-        if (winner === "O") scene.scores.player++;
-        if (winner === "X") scene.scores.bot++;
 
-        // Send updates to React
-        gameEvents.emit("score:update", scene.scores);
-        gameEvents.emit("game:over", { winner });
+        if (winner === "O") scene.scores.player += 3;
+        else scene.scores.bot += 3;
+
+        // 🔔 Notify React/UI
+        EventBus.emit("game:over", { winner });
+        EventBus.emit("score:update", { ...scene.scores });
 
         // Highlight winning line
         Objects.animateWinningLine(scene);
@@ -59,7 +60,14 @@ const Handlers = {
     },
     handleDraw(scene) {
         scene.gameOver = true;
-        gameEvents.emit("game:over", { winner: "draw" });
+
+        // ✅ Both get +1 point
+        scene.scores.player++;
+        scene.scores.bot++;
+
+        // 🔔 Notify React/UI
+        EventBus.emit("game:over", { winner: "draw" });
+        EventBus.emit("score:update", { ...scene.scores });
 
         // Pulse all cells for draw effect
         scene.cells.forEach((cell) => {
