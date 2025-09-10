@@ -51,7 +51,7 @@ We have provided a default project structure to get you started. This is as foll
 | `src/game`                      | Contains the game source code.                                                                        |
 | `src/game/init.jsx`             | The main **game** entry point. This contains the game configuration and starts the game.              |
 | `src/game/scenes/`              | The Phaser Scenes are in this folder.                                                                 |
-| `src/index.css`                 | Some simple CSS rules to help with page layout.                                                       |
+| `public/style.css`              | Some simple CSS rules to help with page layout.                                                       |
 | `public/assets`                 | Contains the static assets used by the game.                                                          |
 
 ## React Bridge
