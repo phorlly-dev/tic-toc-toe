@@ -1,9 +1,9 @@
 import * as React from "react";
-import PhaserGame from "../components/PhaserGame";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { EventBus } from "../hooks/events";
-import { useToast } from "../hooks/toast";
+import PhaserGame from "./components/PhaserGame";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { EventBus } from "./hooks/events";
+import { useToast } from "./hooks/toast";
 
 const App = () => {
     const phaserRef = React.useRef();
