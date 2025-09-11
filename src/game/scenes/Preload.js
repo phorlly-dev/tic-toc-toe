@@ -6,7 +6,18 @@ class Preload extends Phaser.Scene {
     }
 
     preload() {
-        this.createNeonTextures();
+        try {
+            this.createNeonTextures();
+            this.load.setPath("assets/sounds/");
+            this.load.audio("click", "click.wav");
+            this.load.audio("draw", "draw.wav");
+            this.load.audio("lose", "lose.wav");
+            this.load.audio("win", "win.wav");
+            this.load.audio("close", "close.wav");
+            this.load.audio("reset", "reset.wav");
+        } catch (error) {
+            console.error(`The assets loaded failed: ${error}`);
+        }
     }
 
     create() {

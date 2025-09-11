@@ -3,6 +3,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: system-ui, sans-serif;
+    background: linear-gradient(135deg, #6d28d9, #1e3a8a);
 }
 
 @keyframes slide-up {
@@ -17,4 +18,23 @@ body {
 }
 .animate-slide-up {
     animation: slide-up 0.3s ease-out;
+}
+
+#game-container canvas {
+    border-radius: 12px;
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+}
+
+.btn {
+    box-shadow: 0 3px 6px rgba(17, 2, 2, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(1px);
 }

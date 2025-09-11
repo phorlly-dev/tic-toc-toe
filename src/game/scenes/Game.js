@@ -30,8 +30,14 @@ class GameEngine extends Phaser.Scene {
         createParticles(this);
 
         // 🔹 Listen for React → Game events
-        EventBus.on("game:reset", () => resetGame(this), this);
-        EventBus.on("sound:toggle", (mute) => (this.sound.mute = mute));
+        EventBus.on("game:reset", () => {
+            resetGame(this);
+            this.sound.play("reset");
+        });
+        EventBus.on("sound:toggle", (mute) => {
+            this.sound.mute = mute;
+            this.sound.play("close");
+        });
         EventBus.on("difficulty:change", (level) => (this.difficulty = level));
 
         // Example UI: scores start at 0

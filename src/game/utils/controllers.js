@@ -35,6 +35,7 @@ const Contrllers = {
     makeMove(scene, index, player) {
         if (scene.board[index] || scene.gameOver) return;
 
+        scene.sound.play("click");
         scene.board[index] = player;
         const texture = player === "O" ? "neonO" : "neonX";
 

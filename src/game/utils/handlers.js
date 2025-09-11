@@ -6,8 +6,13 @@ const Handlers = {
     handleWin(scene, winner) {
         scene.gameOver = true;
 
-        if (winner === "O") scene.scores.player += 3;
-        else scene.scores.bot += 3;
+        if (winner === "O") {
+            scene.scores.player += 3;
+            scene.sound.play("win");
+        } else {
+            scene.scores.bot += 3;
+            scene.sound.play("lose");
+        }
 
         // 🔔 Notify React/UI
         EventBus.emit("game:over", { winner });
@@ -60,6 +65,7 @@ const Handlers = {
     },
     handleDraw(scene) {
         scene.gameOver = true;
+        scene.sound.play("draw");
 
         // ✅ Both get +1 point
         scene.scores.player++;
