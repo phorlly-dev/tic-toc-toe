@@ -16,7 +16,7 @@ const ToastProvider = ({ children }) => {
             {children}
 
             {/* Toast Container */}
-            <div className="position-fixed top-0 start-50 translate-middle-x mt-3">
+            <div className="position-fixed top-0 start-50 translate-middle-x mt-4 rounded-4">
                 {toasts.map((toast) => (
                     <div
                         key={toast.id}

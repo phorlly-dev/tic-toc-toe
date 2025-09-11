@@ -39,7 +39,7 @@ const Header = () => {
                     <span className="ms-1 fw-bold">{scores.bot}</span>
                 </div>
             </div>
-            <div className="d-flex gap-3 m-auto">
+            <div className="d-flex gap-4 m-auto">
                 <select
                     className=" form-select bg-secondary text-white"
                     value={difficulty}
