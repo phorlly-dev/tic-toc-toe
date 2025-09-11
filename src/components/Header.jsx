@@ -27,7 +27,7 @@ const Header = () => {
     };
 
     return (
-        <div className="card-header flex flex-wrap gap-2 bg-primary bg-opacity-50 p-3 rounded-4">
+        <div className="card-header flex flex-wrap m-auto gap-3 items-center justify-content-between bg-primary bg-opacity-50 p-3 rounded-4">
             <div className="d-flex gap-3 m-auto">
                 <div className="bg-success text-white fs-6 py-2 rounded-3 px-3">
                     <i className="fa fa-user me-2"></i> You:{" "}

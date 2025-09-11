@@ -5,7 +5,7 @@ const Footer = () => {
     React.useEffect(() => {}, []);
 
     return (
-        <div className="card-footer d-flex flex-wrap bg-secondary bg-opacity-50 p-3 rounded-4">
+        <div className="card-footer d-flex flex-wrap m-auto gap-3 items-center justify-content-between bg-secondary bg-opacity-50 p-3 rounded-4">
             <span className="text-white fs-6 m-auto">
                 Two players can play OX (also known as <b>Tic-Tac-Toe</b>).
             </span>
