@@ -32,19 +32,15 @@ const App = () => {
                 style={{ maxWidth: "600px", width: "100%" }}
             >
                 {/* Header */}
-                {/* <div className="card-header mb-2">
-                </div> */}
                 <Header />
 
                 {/* Game Board */}
-                <div className="ratio ratio-1x1 border bg-dark d-flex justify-content-center align-items-center mb-2 mt-2 rounded-4">
+                <div className="card-body ratio ratio-1x1 border bg-dark d-flex justify-content-center align-items-center mb-2 mt-2 rounded-4">
                     <PhaserGame ref={phaserRef} />
                 </div>
 
                 {/* Footer */}
                 <Footer />
-                {/* <div class="card-footer">
-                </div> */}
             </div>
         </div>
     );

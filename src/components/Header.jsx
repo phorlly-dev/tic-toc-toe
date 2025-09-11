@@ -27,16 +27,16 @@ const Header = () => {
     };
 
     return (
-        <div className="card-header d-flex flex-wrap justify-content-around bg-primary bg-opacity-50 p-3 align-items-center gap-2 rounded-4">
-            <div className="flex gap-3">
-                <div className="badge bg-success d-flex align-items-center fs-5 py-2 rounded-3 px-3">
+        <div className="card-header d-flex flex-wrap justify-content-around bg-primary bg-opacity-50 p-3 align-items-center gap-4 rounded-4">
+            <div className="d-flex gap-3">
+                <div className="bg-success d-flex align-items-center text-white fs-6 py-2 rounded-3 px-3">
                     <i className="fa fa-user me-2"></i> You:{" "}
-                    <span className="ms-1">{scores.player}</span>
+                    <span className="ms-1 fw-bold">{scores.player}</span>
                 </div>
 
-                <div className="badge bg-danger d-flex align-items-center fs-5 py-2 rounded-3 px-3">
+                <div className="bg-danger d-flex align-items-center text-white fs-6 py-2 rounded-3 px-3">
                     <i className="fa fa-robot me-2"></i> Bot:{" "}
-                    <span className="ms-1">{scores.bot}</span>
+                    <span className="ms-1 fw-bold">{scores.bot}</span>
                 </div>
             </div>
             <div className="flex gap-4">
