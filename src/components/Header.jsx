@@ -27,34 +27,34 @@ const Header = () => {
     };
 
     return (
-        <div className="card-header d-flex flex-wrap justify-content-around bg-primary bg-opacity-50 p-3 align-items-center gap-4 rounded-4">
-            <div className="d-flex gap-3">
-                <div className="bg-success d-flex align-items-center text-white fs-6 py-2 rounded-3 px-3">
+        <div className="card-header flex flex-wrap gap-2 bg-primary bg-opacity-50 p-3 rounded-4">
+            <div className="d-flex gap-3 m-auto">
+                <div className="bg-success text-white fs-6 py-2 rounded-3 px-3">
                     <i className="fa fa-user me-2"></i> You:{" "}
                     <span className="ms-1 fw-bold">{scores.player}</span>
                 </div>
 
-                <div className="bg-danger d-flex align-items-center text-white fs-6 py-2 rounded-3 px-3">
+                <div className="bg-danger text-white fs-6 py-2 rounded-3 px-3">
                     <i className="fa fa-robot me-2"></i> Bot:{" "}
                     <span className="ms-1 fw-bold">{scores.bot}</span>
                 </div>
             </div>
-            <div className="d-flex gap-4">
+            <div className="d-flex gap-3 m-auto">
                 <select
                     className=" form-select bg-secondary text-white"
                     value={difficulty}
                     onChange={handleChange}
                 >
-                    <option>Easy</option>
-                    <option>Medium</option>
-                    <option>Hard</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
                 </select>
                 <button
                     onClick={toggle}
                     title="Toggle sound on/off"
                     aria-label="Toggle sound"
-                    className={`btn rounded-circle shadow  ${
-                        muted ? "btn-dark" : "btn-success "
+                    className={`btn rounded-circle shadow ${
+                        muted ? "btn-dark" : "btn-success"
                     }`}
                 >
                     <i

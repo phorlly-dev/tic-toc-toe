@@ -5,12 +5,12 @@ const Footer = () => {
     React.useEffect(() => {}, []);
 
     return (
-        <div className="card-footer d-flex flex-wrap justify-content-around align-items-center bg-secondary bg-opacity-50 p-3 rounded-4 gap-2">
-            <span className="text-white fs-6">
+        <div className="card-footer d-flex flex-wrap bg-secondary bg-opacity-50 p-3 rounded-4">
+            <span className="text-white fs-6 m-auto">
                 Two players can play OX (also known as <b>Tic-Tac-Toe</b>).
             </span>
             <button
-                className="btn btn-danger rounded-circle shadow"
+                className="btn btn-danger rounded-circle shadow m-auto"
                 title="Reset Game"
                 onClick={() => EventBus.emit("game:reset")}
                 aria-label="Reset Game"

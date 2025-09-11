@@ -12,7 +12,7 @@ const App = () => {
     React.useEffect(() => {
         const handleGameOver = ({ winner }) => {
             if (winner === "draw") {
-                showToast("🤝 It's a draw!", "warning");
+                showToast("🤝 It's a draw!", "info");
             } else if (winner === "O") {
                 showToast("🎉 You Wins!", "success");
             } else if (winner === "X") {
