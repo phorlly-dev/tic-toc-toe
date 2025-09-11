@@ -42,7 +42,7 @@ const ToastProvider = ({ children }) => {
     return (
         <ToastContext.Provider value={{ showToast }}>
             {children}
-            <div className="fixed top-1/6 justify-center items-center w-full flex flex-col">
+            <section className="fixed top-1/6 justify-center items-center w-full flex flex-col">
                 {toasts.map((toast) => (
                     <div
                         key={toast.id}
@@ -56,7 +56,7 @@ const ToastProvider = ({ children }) => {
                         {toast.message}
                     </div>
                 ))}
-            </div>
+            </section>
         </ToastContext.Provider>
     );
 };

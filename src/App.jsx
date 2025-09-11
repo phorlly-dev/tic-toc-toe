@@ -11,12 +11,18 @@ const App = () => {
 
     React.useEffect(() => {
         const handleGameOver = ({ winner }) => {
-            if (winner === "draw") {
-                showToast("🤝 It's a draw!", "info");
-            } else if (winner === "O") {
-                showToast("🎉 You Wins!", "success");
-            } else if (winner === "X") {
-                showToast("🤖 Bot Wins!", "error");
+            switch (winner) {
+                case "O":
+                    showToast("🎉 You Wins!", "success");
+                    break;
+
+                case "X":
+                    showToast("🤖 Bot Wins!", "error");
+                    break;
+
+                default:
+                    showToast("🤝 It's a draw!", "info");
+                    break;
             }
         };
 
@@ -53,14 +59,11 @@ const App = () => {
                 <Header />
 
                 {/* GAME BOARD */}
-                <div className="flex-1 flex items-center justify-center">
-                    <div
-                        id="phaser-parent"
-                        className="w-full max-w-[600px] aspect-square rounded-xl overflow-hidden shadow-2xl"
-                    >
+                <main className="flex-1 flex items-center justify-center">
+                    <section className="w-full max-w-[600px] aspect-square rounded-xl overflow-hidden shadow-2xl">
                         <PhaserGame ref={phaserRef} />
-                    </div>
-                </div>
+                    </section>
+                </main>
 
                 {/* FOOTER */}
                 <Footer />

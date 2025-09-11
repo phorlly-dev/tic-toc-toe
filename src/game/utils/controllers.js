@@ -20,14 +20,14 @@ const Contrllers = {
         if (scene.gameOver) return;
 
         switch (scene.difficulty) {
-            case "easy":
-                botRandom(scene);
-                break;
             case "medium":
                 botWinOrBlock(scene);
                 break;
             case "hard":
                 botPerfect(scene);
+                break;
+            default:
+                botRandom(scene);
                 break;
         }
     },

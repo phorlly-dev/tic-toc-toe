@@ -14,7 +14,7 @@ const Actions = {
         if (emptyCells.length === 0) return;
 
         // Try win
-        for (let [a, b, c] of winningPatterns()) {
+        for (const [a, b, c] of winningPatterns()) {
             if (
                 scene.board[a] === "X" &&
                 scene.board[b] === "X" &&
@@ -35,25 +35,25 @@ const Actions = {
                 return makeMove(scene, a, "X");
         }
         // Block player
-        for (let [a, b, c] of winningPatterns()) {
+        for (const [x, y, z] of winningPatterns()) {
             if (
-                scene.board[a] === "O" &&
-                scene.board[b] === "O" &&
-                scene.board[c] === null
+                scene.board[x] === "O" &&
+                scene.board[y] === "O" &&
+                scene.board[z] === null
             )
-                return makeMove(scene, c, "X");
+                return makeMove(scene, z, "X");
             else if (
-                scene.board[a] === "O" &&
-                scene.board[c] === "O" &&
-                scene.board[b] === null
+                scene.board[x] === "O" &&
+                scene.board[z] === "O" &&
+                scene.board[y] === null
             )
-                return makeMove(scene, b, "X");
+                return makeMove(scene, y, "X");
             else if (
-                scene.board[b] === "O" &&
-                scene.board[c] === "O" &&
-                scene.board[a] === null
+                scene.board[y] === "O" &&
+                scene.board[z] === "O" &&
+                scene.board[x] === null
             )
-                return makeMove(scene, a, "X");
+                return makeMove(scene, x, "X");
         }
 
         // Else random

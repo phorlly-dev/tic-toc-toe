@@ -6,12 +6,15 @@ const Handlers = {
     handleWin(scene, winner) {
         scene.gameOver = true;
 
-        if (winner === "O") {
-            scene.scores.player += 3;
-            scene.sound.play("win");
-        } else {
-            scene.scores.bot += 3;
-            scene.sound.play("lose");
+        switch (winner) {
+            case "O":
+                scene.scores.player += 3;
+                scene.sound.play("win");
+                break;
+            default:
+                scene.scores.bot += 3;
+                scene.sound.play("lose");
+                break;
         }
 
         // 🔔 Notify React/UI

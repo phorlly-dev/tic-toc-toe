@@ -79,36 +79,36 @@ const Helpers = {
     minimax(scene, board, depth, isMaximizing) {
         const winner = checkWinner(scene);
         if (winner === "X") return 10 - depth;
-        if (winner === "O") return depth - 10;
-        if (board.every((c) => c !== null)) return 0;
+        else if (winner === "O") return depth - 10;
+        else if (board.every((c) => c !== null)) return 0;
 
         if (isMaximizing) {
-            let best = -Infinity;
-            for (let i = 0; i < 9; i++) {
-                if (board[i] === null) {
-                    board[i] = "X";
-                    best = Math.max(
-                        best,
-                        minimax(scene, board, depth + 1, false)
-                    );
-                    board[i] = null;
-                }
-            }
-            return best;
+            return calBoard(scene, -Infinity, board, depth, "X", false);
         } else {
-            let best = Infinity;
-            for (let i = 0; i < 9; i++) {
-                if (board[i] === null) {
-                    board[i] = "O";
+            return calBoard(scene, Infinity, board, depth, "O", true);
+        }
+    },
+    calBoard(scene, infinity, board, depth, player, isMaximizing) {
+        let best = infinity;
+        for (let i = 0; i < 9; i++) {
+            if (board[i] === null) {
+                board[i] = player;
+                if (isMaximizing) {
                     best = Math.min(
                         best,
-                        minimax(scene, board, depth + 1, true)
+                        minimax(scene, board, depth + 1, isMaximizing)
                     );
-                    board[i] = null;
+                } else {
+                    best = Math.max(
+                        best,
+                        minimax(scene, board, depth + 1, isMaximizing)
+                    );
                 }
+
+                board[i] = null;
             }
-            return best;
         }
+        return best;
     },
 };
 
@@ -120,4 +120,5 @@ export const {
     getEmptyCells,
     winningPatterns,
     minimax,
+    calBoard,
 } = Helpers;
