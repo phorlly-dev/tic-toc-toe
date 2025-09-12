@@ -1,8 +1,16 @@
 import * as React from "react";
+import { CheckLoaded } from "../hooks/load";
 
 const ToastContext = React.createContext();
 const ToastProvider = ({ children }) => {
     const [toasts, setToasts] = React.useState([]);
+    const [isLoaded, setIsLoaded] = React.useState(false);
+
+    React.useEffect(() => {
+        const isChecked = CheckLoaded();
+        setIsLoaded(isChecked);
+    }, []);
+
     const showToast = React.useCallback((message, type = "info") => {
         const id = Date.now();
         setToasts((prev) => [...prev, { id, message, type }]);
@@ -11,35 +19,7 @@ const ToastProvider = ({ children }) => {
         }, 3000);
     }, []);
 
-    // return (
-    //     <ToastContext.Provider value={{ showToast }}>
-    //         {children}
-
-    //         {/* Toast Container */}
-    //         <div className="position-fixed top-0 start-50 translate-middle-x mt-4 rounded-4">
-    //             {toasts.map((toast) => (
-    //                 <div
-    //                     key={toast.id}
-    //                     className={`toast align-items-center text-white border-0 mb-2 show
-    //           ${toast.type === "success" ? "bg-success" : ""}
-    //           ${toast.type === "error" ? "bg-danger" : ""}
-    //           ${toast.type === "warning" ? "bg-warning text-dark" : ""}
-    //           ${toast.type === "info" ? "bg-primary" : ""}`}
-    //                     role="alert"
-    //                     aria-live="assertive"
-    //                     aria-atomic="true"
-    //                     style={{ width: "150px" }}
-    //                 >
-    //                     <div className="d-flex px-3 py-2">
-    //                         <div className="toast-body">{toast.message}</div>
-    //                     </div>
-    //                 </div>
-    //             ))}
-    //         </div>
-    //     </ToastContext.Provider>
-    // );
-
-    return (
+    return isLoaded ? (
         <ToastContext.Provider value={{ showToast }}>
             {children}
             <section className="fixed top-1/6 justify-center items-center w-full flex flex-col">
@@ -57,6 +37,32 @@ const ToastProvider = ({ children }) => {
                     </div>
                 ))}
             </section>
+        </ToastContext.Provider>
+    ) : (
+        <ToastContext.Provider value={{ showToast }}>
+            {children}
+
+            {/* Toast Container */}
+            <div className="position-fixed top-0 start-50 translate-middle-x mt-4 rounded-4">
+                {toasts.map((toast) => (
+                    <div
+                        key={toast.id}
+                        className={`toast align-items-center text-white border-0 mb-2 show
+              ${toast.type === "success" ? "bg-success" : ""}
+              ${toast.type === "error" ? "bg-danger" : ""}
+              ${toast.type === "warning" ? "bg-warning text-dark" : ""}
+              ${toast.type === "info" ? "bg-primary" : ""}`}
+                        role="alert"
+                        aria-live="assertive"
+                        aria-atomic="true"
+                        style={{ width: "150px" }}
+                    >
+                        <div className="d-flex px-3 py-2">
+                            <div className="toast-body">{toast.message}</div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </ToastContext.Provider>
     );
 };

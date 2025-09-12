@@ -6,7 +6,7 @@ const Actions = {
     botRandom(scene) {
         const emptyCells = getEmptyCells(scene);
         const choice = Phaser.Utils.Array.GetRandom(emptyCells);
-        if (choice !== undefined) makeMove(scene, choice, "X");
+        if (choice !== undefined) return makeMove(scene, choice, "X");
     },
     // --- MEDIUM (Win-or-Block) ---
     botWinOrBlock(scene) {
@@ -57,7 +57,7 @@ const Actions = {
         }
 
         // Else random
-        botRandom(scene);
+        return botRandom(scene);
     },
     // --- HARD (Perfect Minimax) ---
     botPerfect(scene) {
@@ -76,7 +76,7 @@ const Actions = {
             }
         }
 
-        if (move !== undefined) makeMove(scene, move, "X");
+        if (move !== undefined) return makeMove(scene, move, "X");
     },
 };
 

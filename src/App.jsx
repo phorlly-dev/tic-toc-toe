@@ -4,10 +4,17 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { EventBus } from "./hooks/events";
 import { useToast } from "./hooks/toast";
+import { CheckLoaded } from "./hooks/load";
 
 const App = () => {
     const phaserRef = React.useRef();
     const { showToast } = useToast();
+    const [isLoaded, setIsLoaded] = React.useState(false);
+
+    React.useEffect(() => {
+        const isChecked = CheckLoaded();
+        setIsLoaded(isChecked);
+    }, []);
 
     React.useEffect(() => {
         const handleGameOver = ({ winner }) => {
@@ -31,43 +38,47 @@ const App = () => {
         return () => EventBus.off("game:over", handleGameOver);
     }, [showToast]);
 
-    // return (
-    //     <div className="min-vh-100 d-flex justify-content-center align-items-center p-2">
-    //         <div
-    //             className="card shadow-lg rounded-4 p-3 bg-gradient"
-    //             style={{ maxWidth: "600px", width: "100%" }}
-    //         >
-    //             {/* Header */}
-    //             <Header />
-
-    //             {/* Game Board */}
-    //             <div className="card-body ratio ratio-1x1 border bg-dark d-flex justify-content-center align-items-center mb-2 mt-2 rounded-4">
-    //                 <PhaserGame ref={phaserRef} />
-    //             </div>
-
-    //             {/* Footer */}
-    //             <Footer />
-    //         </div>
-    //     </div>
-    // );
-
     return (
-        <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-800 to-indigo-900 p-2">
-            {/* Container Card */}
-            <div className="w-full max-w-xl flex flex-col gap-3 bg-white/40 p-6 rounded-2xl shadow-lg">
-                {/* HEADER */}
-                <Header />
+        <div className="flex">
+            {isLoaded ? (
+                <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-800 to-indigo-900 p-2">
+                    {/* Container Card */}
+                    <div className="w-full max-w-xl flex flex-col gap-3 bg-white/60 p-6 rounded-2xl shadow-lg">
+                        {/* HEADER */}
+                        <Header isLoaded={isLoaded} />
 
-                {/* GAME BOARD */}
-                <main className="flex-1 flex items-center justify-center">
-                    <section className="w-full max-w-[600px] aspect-square rounded-xl overflow-hidden shadow-2xl">
-                        <PhaserGame ref={phaserRef} />
-                    </section>
-                </main>
+                        {/* GAME BOARD */}
+                        <main className="flex-1 flex items-center justify-center">
+                            <section className="w-full max-w-[600px] aspect-square rounded-xl overflow-hidden shadow-2xl">
+                                <PhaserGame ref={phaserRef} />
+                            </section>
+                        </main>
 
-                {/* FOOTER */}
-                <Footer />
-            </div>
+                        {/* FOOTER */}
+                        <Footer isLoaded={isLoaded} />
+                    </div>
+                </div>
+            ) : (
+                <div className="min-vh-100 d-flex justify-content-center align-items-center p-2">
+                    <div
+                        className="card rounded-4 p-3 m-auto"
+                        style={{ maxWidth: "600px", width: "100%" }}
+                    >
+                        {/* Header */}
+                        <Header isLoaded={isLoaded} />
+
+                        {/* Game Board */}
+                        <main className="card-body border ratio ratio-1x1 mb-2 mt-2 rounded-4 shadow-lg">
+                            <section className="justify-content-center align-items-center d-flex flex-col ">
+                                <PhaserGame ref={phaserRef} />
+                            </section>
+                        </main>
+
+                        {/* Footer */}
+                        <Footer isLoaded={isLoaded} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

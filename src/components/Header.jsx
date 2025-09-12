@@ -2,7 +2,7 @@ import * as React from "react";
 import { EventBus } from "../hooks/events";
 import { FaGamepad } from "react-icons/fa";
 
-const Header = () => {
+const Header = ({ isLoaded }) => {
     const [muted, setMuted] = React.useState(false);
     const [scores, setScores] = React.useState({ player: 0, bot: 0 });
     const [difficulty, setDifficulty] = React.useState("easy");
@@ -26,48 +26,7 @@ const Header = () => {
         EventBus.emit("difficulty:change", value);
     };
 
-    // return (
-    //     <div className="card-header flex flex-wrap m-auto gap-3 items-center justify-content-between bg-primary bg-opacity-50 p-3 rounded-4">
-    //         <div className="d-flex gap-3 m-auto">
-    //             <div className="bg-success text-white fs-6 py-2 rounded-3 px-3">
-    //                 <i className="fa fa-user me-2"></i> You:{" "}
-    //                 <span className="ms-1 fw-bold">{scores.player}</span>
-    //             </div>
-
-    //             <div className="bg-danger text-white fs-6 py-2 rounded-3 px-3">
-    //                 <i className="fa fa-robot me-2"></i> Bot:{" "}
-    //                 <span className="ms-1 fw-bold">{scores.bot}</span>
-    //             </div>
-    //         </div>
-    //         <div className="d-flex gap-4 m-auto">
-    //             <select
-    //                 className=" form-select bg-secondary text-white"
-    //                 value={difficulty}
-    //                 onChange={handleChange}
-    //             >
-    //                 <option value="easy">Easy</option>
-    //                 <option value="medium">Medium</option>
-    //                 <option value="hard">Hard</option>
-    //             </select>
-    //             <button
-    //                 onClick={toggle}
-    //                 title="Toggle sound on/off"
-    //                 aria-label="Toggle sound"
-    //                 className={`btn rounded-circle shadow ${
-    //                     muted ? "btn-dark" : "btn-success"
-    //                 }`}
-    //             >
-    //                 <i
-    //                     className={`fa ${
-    //                         muted ? "fa-volume-mute" : "fa-volume-up"
-    //                     }`}
-    //                 ></i>
-    //             </button>
-    //         </div>
-    //     </div>
-    // );
-
-    return (
+    return isLoaded ? (
         <header className="w-full flex flex-col sm:flex-row items-center justify-between bg-violet-800/30 p-4 rounded-xl shadow-lg gap-2">
             <section className="flex justify-center sm:justify-start gap-3 w-full sm:w-auto">
                 <div className="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-lg text-white font-semibold">
@@ -118,6 +77,51 @@ const Header = () => {
                     </button>
                 </div>
             </section>
+        </header>
+    ) : (
+        <header className="card-header bg-primary bg-opacity-50 p-3 rounded-3">
+            <div className="row align-items-center g-3">
+                {/* Scores section */}
+                <section className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-start gap-3">
+                    <div className="bg-success text-white fs-6 py-2 rounded-3 px-3 d-flex align-items-center">
+                        <i className="fa fa-user me-2"></i> You:{" "}
+                        <span className="ms-1 fw-bold">{scores.player}</span>
+                    </div>
+
+                    <div className="bg-danger text-white fs-6 py-2 rounded-3 px-3 d-flex align-items-center">
+                        <i className="fa fa-robot me-2"></i> Bot:{" "}
+                        <span className="ms-1 fw-bold">{scores.bot}</span>
+                    </div>
+                </section>
+
+                {/* Controls section */}
+                <section className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end gap-3">
+                    <select
+                        className="form-select bg-secondary text-white w-auto rounded-3"
+                        value={difficulty}
+                        onChange={handleChange}
+                    >
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+
+                    <button
+                        onClick={toggle}
+                        title="Toggle sound on/off"
+                        aria-label="Toggle sound"
+                        className={`btn rounded-circle shadow ${
+                            muted ? "btn-dark" : "btn-success"
+                        }`}
+                    >
+                        <i
+                            className={`fa ${
+                                muted ? "fa-volume-mute" : "fa-volume-up"
+                            }`}
+                        ></i>
+                    </button>
+                </section>
+            </div>
         </header>
     );
 };

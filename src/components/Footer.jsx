@@ -1,26 +1,10 @@
 import * as React from "react";
 import { EventBus } from "../hooks/events";
 
-const Footer = () => {
+const Footer = ({ isLoaded }) => {
     React.useEffect(() => {}, []);
 
-    // return (
-    //     <div className="card-footer d-flex flex-wrap m-auto gap-3 items-center justify-content-between bg-secondary bg-opacity-50 p-3 rounded-4">
-    //         <span className="text-white fs-6 m-auto">
-    //             Two players can play OX (also known as <b>Tic-Tac-Toe</b>).
-    //         </span>
-    //         <button
-    //             className="btn btn-danger rounded-circle shadow m-auto"
-    //             title="Reset Game"
-    //             onClick={() => EventBus.emit("game:reset")}
-    //             aria-label="Reset Game"
-    //         >
-    //             <i className="fa fa-refresh"></i>
-    //         </button>
-    //     </div>
-    // );
-
-    return (
+    return isLoaded ? (
         <footer className="w-full flex flex-col sm:flex-row items-center justify-between bg-gray-800/30 p-4 rounded-xl shadow-lg gap-2">
             {/* Info text */}
             <section className="flex justify-center sm:justify-start">
@@ -44,6 +28,27 @@ const Footer = () => {
                     title="Reset Game"
                 >
                     <i className="fa fa-refresh text-lg"></i>
+                </button>
+            </section>
+        </footer>
+    ) : (
+        <footer className="card-footer bg-gradient d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 bg-secondary bg-opacity-40 p-3 rounded-3">
+            {/* Info text */}
+            <section className="text-center text-lg-start">
+                <span className="text-white fs-6">
+                    Two players can play OX (also known as <b>Tic-Tac-Toe</b>).
+                </span>
+            </section>
+
+            {/* Reset button */}
+            <section className="text-center text-lg-end">
+                <button
+                    className="btn btn-danger rounded-circle shadow-lg"
+                    title="Reset Game"
+                    onClick={() => EventBus.emit("game:reset")}
+                    aria-label="Reset Game"
+                >
+                    <i className="fa fa-refresh"></i>
                 </button>
             </section>
         </footer>
