@@ -2,7 +2,7 @@ import * as React from "react";
 import { EventBus } from "../hooks/events";
 import { FaGamepad } from "react-icons/fa";
 
-const Header = ({ isLoaded }) => {
+const Header = ({ isTailwind = true }) => {
     const [muted, setMuted] = React.useState(false);
     const [scores, setScores] = React.useState({ player: 0, bot: 0 });
     const [difficulty, setDifficulty] = React.useState("easy");
@@ -26,7 +26,8 @@ const Header = ({ isLoaded }) => {
         EventBus.emit("difficulty:change", value);
     };
 
-    return isLoaded ? (
+    return isTailwind ? (
+        // Tailwind style
         <header className="w-full flex flex-col sm:flex-row items-center justify-between bg-violet-800/30 p-4 rounded-xl shadow-lg gap-2">
             <section className="flex justify-center sm:justify-start gap-3 w-full sm:w-auto">
                 <div className="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-lg text-white font-semibold">
@@ -79,6 +80,7 @@ const Header = ({ isLoaded }) => {
             </section>
         </header>
     ) : (
+        // Bootstrap style
         <header className="card-header bg-primary bg-opacity-50 p-3 rounded-3">
             <div className="row align-items-center g-3">
                 {/* Scores section */}

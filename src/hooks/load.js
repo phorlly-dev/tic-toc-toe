@@ -1,4 +1,4 @@
-export const CheckLoaded = () => {
+export const isLoaded = () => {
     const element = document.createElement("div");
     element.className = "flex"; // Tailwind always includes flex
     document.body.appendChild(element);
@@ -7,9 +7,11 @@ export const CheckLoaded = () => {
     document.body.removeChild(element);
 
     if (!isFlex) {
-        console.warn("⚠️ Tailwind not detected, switching to Bootstrap...");
         document.getElementById("bootstrap").disabled = false;
+        console.warn("⚠️ Tailwind not detected, switching to Bootstrap...");
+
+        return false;
     }
 
-    return isFlex;
+    return true;
 };

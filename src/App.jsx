@@ -4,18 +4,14 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { EventBus } from "./hooks/events";
 import { useToast } from "./hooks/toast";
-import { CheckLoaded } from "./hooks/load";
+import { isLoaded } from "./hooks/load";
 
 const App = () => {
     const phaserRef = React.useRef();
     const { showToast } = useToast();
-    const [isLoaded, setIsLoaded] = React.useState(false);
+    const [isTailwind, setIsTailwind] = React.useState(false);
 
-    React.useEffect(() => {
-        const isChecked = CheckLoaded();
-        setIsLoaded(isChecked);
-    }, []);
-
+    React.useEffect(() => setIsTailwind(isLoaded()), []);
     React.useEffect(() => {
         const handleGameOver = ({ winner }) => {
             switch (winner) {
@@ -40,12 +36,13 @@ const App = () => {
 
     return (
         <div className="flex">
-            {isLoaded ? (
+            {isTailwind ? (
+                //  Tailwind style
                 <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-800 to-indigo-900 p-2">
                     {/* Container Card */}
                     <div className="w-full max-w-xl flex flex-col gap-3 bg-white/60 p-6 rounded-2xl shadow-lg">
                         {/* HEADER */}
-                        <Header isLoaded={isLoaded} />
+                        <Header />
 
                         {/* GAME BOARD */}
                         <main className="flex-1 flex items-center justify-center">
@@ -55,17 +52,18 @@ const App = () => {
                         </main>
 
                         {/* FOOTER */}
-                        <Footer isLoaded={isLoaded} />
+                        <Footer />
                     </div>
                 </div>
             ) : (
+                // Bootstrap style
                 <div className="min-vh-100 d-flex justify-content-center align-items-center p-2">
                     <div
                         className="card rounded-4 p-3 m-auto"
                         style={{ maxWidth: "600px", width: "100%" }}
                     >
                         {/* Header */}
-                        <Header isLoaded={isLoaded} />
+                        <Header isTailwind={false} />
 
                         {/* Game Board */}
                         <main className="card-body border ratio ratio-1x1 mb-2 mt-2 rounded-4 shadow-lg">
@@ -75,7 +73,7 @@ const App = () => {
                         </main>
 
                         {/* Footer */}
-                        <Footer isLoaded={isLoaded} />
+                        <Footer isTailwind={false} />
                     </div>
                 </div>
             )}

@@ -1,15 +1,12 @@
 import * as React from "react";
-import { CheckLoaded } from "../hooks/load";
+import { isLoaded } from "../hooks/load";
 
 const ToastContext = React.createContext();
 const ToastProvider = ({ children }) => {
     const [toasts, setToasts] = React.useState([]);
-    const [isLoaded, setIsLoaded] = React.useState(false);
+    const [isTailwind, setIsTailwind] = React.useState(false);
 
-    React.useEffect(() => {
-        const isChecked = CheckLoaded();
-        setIsLoaded(isChecked);
-    }, []);
+    React.useEffect(() => setIsTailwind(isLoaded()), []);
 
     const showToast = React.useCallback((message, type = "info") => {
         const id = Date.now();
@@ -19,7 +16,7 @@ const ToastProvider = ({ children }) => {
         }, 3000);
     }, []);
 
-    return isLoaded ? (
+    return isTailwind ? (
         <ToastContext.Provider value={{ showToast }}>
             {children}
             <section className="fixed top-1/6 justify-center items-center w-full flex flex-col">

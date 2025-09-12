@@ -1,10 +1,11 @@
 import * as React from "react";
 import { EventBus } from "../hooks/events";
 
-const Footer = ({ isLoaded }) => {
+const Footer = ({ isTailwind = true }) => {
     React.useEffect(() => {}, []);
 
-    return isLoaded ? (
+    return isTailwind ? (
+        // Tailwind style
         <footer className="w-full flex flex-col sm:flex-row items-center justify-between bg-gray-800/30 p-4 rounded-xl shadow-lg gap-2">
             {/* Info text */}
             <section className="flex justify-center sm:justify-start">
@@ -32,6 +33,7 @@ const Footer = ({ isLoaded }) => {
             </section>
         </footer>
     ) : (
+        // Bootstrap style
         <footer className="card-footer bg-gradient d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 bg-secondary bg-opacity-40 p-3 rounded-3">
             {/* Info text */}
             <section className="text-center text-lg-start">
