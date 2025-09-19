@@ -7,10 +7,10 @@ import Auth from "./components/Auth";
 const Content = React.lazy(() => import("./components/Content"));
 const Banner = React.lazy(() => import("./components/Banner"));
 const App = () => {
+    const { showToast } = useToast();
     const [loading, setLoading] = React.useState(true);
     const [player, setPlayer] = React.useState(null);
     const [showBanner, setShowBanner] = React.useState(true);
-    const { showToast } = useToast();
     const [isTailwind, setIsTailwind] = React.useState(false);
 
     // Load from Firebase when player logs in
@@ -18,6 +18,7 @@ const App = () => {
         setPlayer(name);
         localStorage.setItem("playerName", name);
         setLoading(false);
+        setShowBanner(true);
     };
 
     React.useEffect(() => {
@@ -27,6 +28,7 @@ const App = () => {
         }
         setLoading(false);
         setIsTailwind(isLoaded());
+        setShowBanner(true);
     }, []);
     React.useEffect(() => {
         const handleGameOver = ({ winner }) => {
@@ -63,16 +65,16 @@ const App = () => {
                 isTailwind={isTailwind}
             />
         );
-    else
-        return (
-            <React.Suspense fallback={loading && <div> Loading... </div>}>
-                <Content
-                    player={player}
-                    onLogout={handleLogout}
-                    isTailwind={isTailwind}
-                />
-            </React.Suspense>
-        );
+
+    return (
+        <React.Suspense fallback={loading && <div> Loading... </div>}>
+            <Content
+                player={player}
+                onLogout={handleLogout}
+                isTailwind={isTailwind}
+            />
+        </React.Suspense>
+    );
 };
 
 export default App;
