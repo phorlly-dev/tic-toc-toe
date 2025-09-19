@@ -1,7 +1,7 @@
 import * as React from "react";
 import { EventBus } from "../hooks/events";
 
-const Footer = ({ isTailwind = true }) => {
+const Footer = ({ isTailwind }) => {
     React.useEffect(() => {}, []);
 
     return isTailwind ? (
@@ -34,7 +34,7 @@ const Footer = ({ isTailwind = true }) => {
         </footer>
     ) : (
         // Bootstrap style
-        <footer className="card-footer bg-gradient d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 bg-secondary bg-opacity-40 p-3 rounded-3">
+        <footer className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 bg-secondary bg-opacity-50 p-3 rounded-3">
             {/* Info text */}
             <section className="text-center text-lg-start">
                 <span className="text-white fs-6">

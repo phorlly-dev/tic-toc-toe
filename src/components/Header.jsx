@@ -2,7 +2,7 @@ import * as React from "react";
 import { EventBus } from "../hooks/events";
 import { FaGamepad } from "react-icons/fa";
 
-const Header = ({ isTailwind = true }) => {
+const Header = ({ isTailwind, onLogout, player }) => {
     const [muted, setMuted] = React.useState(false);
     const [scores, setScores] = React.useState({ player: 0, bot: 0 });
     const [difficulty, setDifficulty] = React.useState("easy");
@@ -32,7 +32,7 @@ const Header = ({ isTailwind = true }) => {
             <section className="flex justify-center sm:justify-start gap-3 w-full sm:w-auto">
                 <div className="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-lg text-white font-semibold">
                     <i className="fa fa-user text-green-200"></i>
-                    You:{" "}
+                    {player}:{" "}
                     <span id="player-score" className="text-cyan-400 text-lg">
                         {scores.player}
                     </span>
@@ -61,10 +61,10 @@ const Header = ({ isTailwind = true }) => {
                     </select>
                 </div>
 
-                <div className="relative">
+                <div className="relative flex flex-column">
                     <button
                         onClick={toggle}
-                        className={`w-10 h-10 flex cursor-pointer items-center p-4 justify-center rounded-full ${
+                        className={`w-8 h-8 flex cursor-pointer items-center p-4 justify-center rounded-full ${
                             muted ? "bg-red-500" : "bg-green-600"
                         }  text-white shadow-lg hover:scale-110 hover:shadow-xl transition`}
                         title="Toggle sound on/off"
@@ -76,17 +76,26 @@ const Header = ({ isTailwind = true }) => {
                             }`}
                         ></i>
                     </button>
+                    <button
+                        onClick={onLogout}
+                        title="Logout game"
+                        aria-label="Logout game"
+                        className="btn h-8 w-8 text-white ml-2 cursor-pointer bg-red-400 sm:mb-0 rounded-full"
+                    >
+                        <i className="fa fa-power-off"></i>
+                    </button>
                 </div>
             </section>
         </header>
     ) : (
         // Bootstrap style
-        <header className="card-header bg-primary bg-opacity-50 p-3 rounded-3">
+        <header className="bg-primary bg-opacity-50 p-3 rounded-3">
             <div className="row align-items-center g-3">
                 {/* Scores section */}
-                <section className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-start gap-3">
+                <section className="col-12 col-md-6 d-flex justify-content-center justify-content-lg-start gap-3">
                     <div className="bg-success text-white fs-6 py-2 rounded-3 px-3 d-flex align-items-center">
-                        <i className="fa fa-user me-2"></i> You:{" "}
+                        <i className="fa fa-user me-2"></i>{" "}
+                        <span className="text-capitalize">{player}:</span>
                         <span className="ms-1 fw-bold">{scores.player}</span>
                     </div>
 
@@ -97,7 +106,7 @@ const Header = ({ isTailwind = true }) => {
                 </section>
 
                 {/* Controls section */}
-                <section className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end gap-3">
+                <section className="col-12 col-md-6 d-flex justify-content-center justify-content-lg-end gap-3">
                     <select
                         className="form-select bg-secondary text-white w-auto rounded-3"
                         value={difficulty}
@@ -112,7 +121,7 @@ const Header = ({ isTailwind = true }) => {
                         onClick={toggle}
                         title="Toggle sound on/off"
                         aria-label="Toggle sound"
-                        className={`btn rounded-circle shadow ${
+                        className={`btn btn-sm w-auto rounded-circle shadow-sm ${
                             muted ? "btn-dark" : "btn-success"
                         }`}
                     >
@@ -121,6 +130,14 @@ const Header = ({ isTailwind = true }) => {
                                 muted ? "fa-volume-mute" : "fa-volume-up"
                             }`}
                         ></i>
+                    </button>
+                    <button
+                        onClick={onLogout}
+                        title="Exit from game"
+                        aria-label="Exit"
+                        className="btn btn-sm w-auto btn-danger shadow-sm rounded-circle"
+                    >
+                        <i className="fa fa-power-off"></i>
                     </button>
                 </section>
             </div>
