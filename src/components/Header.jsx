@@ -30,19 +30,17 @@ const Header = ({ isTailwind, onLogout, player }) => {
         // Tailwind style
         <header className="w-full flex flex-col sm:flex-row items-center justify-between bg-violet-800/30 p-4 rounded-xl shadow-lg gap-2">
             <section className="flex justify-center sm:justify-start gap-3 w-full sm:w-auto">
-                <div className="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-lg text-white font-semibold">
+                <div className="flex capitalize items-center gap-2 bg-black/30 px-4 py-2 rounded-lg text-white font-semibold">
                     <i className="fa fa-user text-green-200"></i>
                     {player}:{" "}
-                    <span id="player-score" className="text-cyan-400 text-lg">
+                    <span className="text-cyan-400 text-lg">
                         {scores.player}
                     </span>
                 </div>
                 <div className="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-lg text-white font-semibold">
                     <i className="fa fa-robot text-pink-200"></i>
                     Bot:{" "}
-                    <span id="bot-score" className="text-cyan-400 text-lg">
-                        {scores.bot}
-                    </span>
+                    <span className="text-cyan-400 text-lg">{scores.bot}</span>
                 </div>
             </section>
 
