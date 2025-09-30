@@ -121,7 +121,8 @@ const Header = ({ isTailwind, onLogout, player }) => {
                         onClick={toggle}
                         title="Toggle sound on/off"
                         aria-label="Toggle sound"
-                        className={`btn btn-sm w-auto rounded-circle shadow-sm ${
+                        style={{ with: "2rem", height: "2rem" }}
+                        className={`btn btn-sm rounded-circle shadow-sm ${
                             muted ? "btn-dark" : "btn-success"
                         }`}
                     >
@@ -135,7 +136,8 @@ const Header = ({ isTailwind, onLogout, player }) => {
                         onClick={onLogout}
                         title="Exit from game"
                         aria-label="Exit"
-                        className="btn btn-sm w-auto btn-danger shadow-sm rounded-circle"
+                        style={{ with: "2rem", height: "2rem" }}
+                        className="btn btn-sm btn-danger rounded-circle"
                     >
                         <i className="fa fa-power-off"></i>
                     </button>

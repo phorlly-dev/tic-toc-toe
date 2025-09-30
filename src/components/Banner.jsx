@@ -35,6 +35,7 @@ const Banner = ({ onClose, isTailwind }) => {
                                 <img
                                     src="/assets/images/banner.webp"
                                     alt="Promote Banner"
+                                    style={{ maxWidth: "360px" }}
                                     className="max-w-xs sm:max-w-md rounded-lg shadow cursor-pointer"
                                 />
                             </a>
@@ -50,7 +51,7 @@ const Banner = ({ onClose, isTailwind }) => {
                         {/* Close Button */}
                         <button
                             type="button"
-                            className="btn btn-danger position-absolute top-0 end-0 m-2 border rounded-circle"
+                            className="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 rounded-circle"
                             aria-label="Close"
                             onClick={handleClose}
                         >

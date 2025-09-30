@@ -7,12 +7,14 @@ import Preload from "./scenes/Preload";
 const config = {
     type: Phaser.AUTO,
     backgroundColor: "#000000",
-    scale: {
-        mode: Phaser.Scale.FIT, // auto scale to fit
-        autoCenter: Phaser.Scale.CENTER_BOTH, // center horizontally + vertically
-        width: 600, // base width
-        height: 600, // base height
-    },
+    width: 600,
+    height: 600,
+    // scale: {
+    //     mode: Phaser.Scale.FIT, // auto scale to fit
+    //     autoCenter: Phaser.Scale.CENTER_BOTH, // center horizontally + vertically
+    //     width: 600, // base width
+    //     height: 600, // base height
+    // },
     scene: [Preload, GameEngine],
 };
 

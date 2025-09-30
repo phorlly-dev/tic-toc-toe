@@ -19,7 +19,7 @@ const Footer = ({ isTailwind }) => {
             <section className="flex justify-center sm:justify-end">
                 <button
                     onClick={() => EventBus.emit("game:reset")}
-                    className="w-12 h-12 flex items-center justify-center
+                    className="w-8 h-8 flex items-center justify-center
                    rounded-full
                    bg-gradient-to-br from-red-500 to-red-700
                    text-white shadow-lg
@@ -45,9 +45,10 @@ const Footer = ({ isTailwind }) => {
             {/* Reset button */}
             <section className="text-center text-lg-end">
                 <button
-                    className="btn btn-danger rounded-circle shadow-lg"
+                    className="btn btn-sm btn-danger rounded-circle shadow-lg"
                     title="Reset Game"
                     onClick={() => EventBus.emit("game:reset")}
+                    style={{ with: "2rem", height: "2rem" }}
                     aria-label="Reset Game"
                 >
                     <i className="fa fa-refresh"></i>
