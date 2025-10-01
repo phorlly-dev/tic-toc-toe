@@ -13,6 +13,10 @@ class GameEngine extends Phaser.Scene {
         this.cells = [];
         this.winningLine = null;
         this.difficulty = "easy"; // default
+        this.boardSize = 0;
+        this.cellSize = 0;
+        this.startX = 0;
+        this.startY = 0;
     }
 
     create() {
@@ -40,13 +44,14 @@ class GameEngine extends Phaser.Scene {
         });
         EventBus.on("difficulty:change", (level) => (this.difficulty = level));
 
-        // Example UI: scores start at 0
-        EventBus.emit("score:update", { ...this.scores });
-
         resizeBoard(this, this.scale.width, this.scale.height);
         this.scale.on("resize", (gameSize) => {
             resizeBoard(this, gameSize.width, gameSize.height);
         });
+    }
+
+    update() {
+        EventBus.emit("score:update", { ...this.scores });
     }
 }
 

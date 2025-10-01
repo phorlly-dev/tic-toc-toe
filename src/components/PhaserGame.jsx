@@ -2,7 +2,7 @@ import * as React from "react";
 import StartGame from "../game/init";
 import { EventBus } from "../hooks/events";
 
-const PhaserGame = React.forwardRef((_props, ref) => {
+const PhaserGame = React.forwardRef(({ props }, ref) => {
     const game = React.useRef();
 
     React.useLayoutEffect(() => {
@@ -35,7 +35,7 @@ const PhaserGame = React.forwardRef((_props, ref) => {
         return () => EventBus.off("current-scene-ready", handleSceneReady);
     }, [ref]);
 
-    return <div id="game-container"></div>;
+    return <div id="game-container" {...props}></div>;
 });
 
 export default PhaserGame;
